@@ -7,18 +7,24 @@ from random import seed
 from sys import argv
 
 times = int(argv[1])
+rand_max = int(argv[2])
 member_list = [100 for x in range(100)]
 
 def give_member():
-  return randint(0,99)
+  return randint(0,99), randint(0,rand_max)
 
 def giving():
   for x in range(100):
-    member_list[x]-=1
-    member_list[give_member()]+=1
+    member, amount = give_member()
+    if rand_max == 0:
+      amount = 1
+    member_list[x]-=amount
+    member_list[member]+=amount
 
 for x in range(times):
   seed()
   giving()
 
-print(max(member_list), min(member_list))
+max_member, min_member = max(member_list), min(member_list)
+diff = max_member - min_member
+print(max_member, min_member, diff)
